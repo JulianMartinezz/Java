@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  elecciones:
+    image: tupfrcutn/elecciones-2023:1.0.0
+    container_name: elecciones
+    ports:
+      - "8080:8080"
+    networks:
+      - service-team-app
+    restart: on-failure
+
+  api-container:
+    container_name: api-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - service-team-app
+    restart: on-failure
+
+networks:
+  service-team-app:
