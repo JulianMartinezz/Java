@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  clients:
+    container_name: clientsc
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: weather_db
+    networks:
+      service-net-app:
+    volumes:
+      - mysqldata:/var/lib/clientsc
+
+  practica-parcial:
+
+    container_name: weather-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+    ports:
+      - "8080:8080"
+    networks:
+      service-net-app:
+    restart: on-failure
+
+
+networks:
+  service-net-app:
+volumes:
+  mysqldata:
